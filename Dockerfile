@@ -30,6 +30,8 @@ RUN apt-get -y update && apt-get install -y \
     libprotobuf-dev \
     libnl-route-3-dev \
     libtool \
+    libc6 \
+    libstdc++6 \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy NSJail binary from build stage
