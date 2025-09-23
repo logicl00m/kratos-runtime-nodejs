@@ -1,0 +1,9 @@
+### GET request to example server
+POST http://localhost:8082/run
+Content-Type: application/json
+
+{
+  "script": "console.log('Hello, World!');",
+  "functionName": "",
+  "input": ""
+}

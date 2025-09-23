@@ -1,0 +1,19 @@
+services:
+  nodejs:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: nodejs
+    restart: unless-stopped
+    privileged: true
+    cap_add:
+      - SYS_ADMIN
+    ports:
+      - "8082:8080"
+    volumes:
+      - ./src:/app/src
+    networks:
+      - kratos-runtime
+
+networks:
+  kratos-runtime:
