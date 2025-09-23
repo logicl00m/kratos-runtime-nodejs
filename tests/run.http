@@ -1,4 +1,4 @@
-### GET request to example server
+### Hello World
 POST http://localhost:8082/run
 Content-Type: application/json
 
@@ -6,4 +6,15 @@ Content-Type: application/json
   "script": "console.log('Hello, World!');",
   "functionName": "",
   "input": ""
+}
+
+### Addition
+POST http://localhost:8082/run
+Content-Type: application/json
+
+{
+  "script": "export function add({a, b}) { return a + b; }",
+  "functionName": "add",
+  "input": {"a": 5, "b": 7},
+  "verbose": false
 }

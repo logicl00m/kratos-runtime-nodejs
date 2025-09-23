@@ -49,6 +49,7 @@ app.post("/run", async (req, res) => {
         let runnerContent;
         if (functionName) {
             runnerContent = `
+import('/work/script.js').then(mod => {
   if (${verbose}) console.log("Module loaded successfully");
   const fn = mod['${functionName}'] || global['${functionName}'];
   if (typeof fn !== 'function') {
@@ -57,13 +58,12 @@ app.post("/run", async (req, res) => {
   }
   if (${verbose}) console.log('Running function:', '${functionName}', 'with input:', ${JSON.stringify(input ?? {})});
   const result = fn(${JSON.stringify(input ?? {})});
-  console.log(JSON.stringify(result));
+  if (${verbose}) console.log("Function result:", JSON.stringify(result));
+  process.stdout.write(JSON.stringify(result));
 }).catch(e => { console.error('Error loading module:', e); process.exit(1); });
 `;
         } else {
             runnerContent = `
-const verbose = ${!!req.body.verbose};
-
 if (${verbose}) console.log("Running full script: /work/script.js");
 import('/work/script.js').catch(e => { console.error('Error running script:', e); process.exit(1); });
 `;
@@ -71,6 +71,7 @@ import('/work/script.js').catch(e => { console.error('Error running script:', e)
 
         console.log("Writing runner wrapper to:", runnerFile);
         await fs.writeFile(runnerFile, runnerContent, { mode: 0o600 });
+        console.log("Runner wrapper content:\n", runnerContent);
 
         console.log("Starting nsjail execution");
         const result = await runWithNsJail({ workDir, runnerFile, chrootDir });
