@@ -1,20 +1,27 @@
 ### Hello World
-POST http://localhost:8082/run
+POST http://localhost:8082/kratos.runtime.nodejs/22-latest/script/run
 Content-Type: application/json
 
 {
-  "script": "console.log('Hello, World!');",
-  "functionName": "",
-  "input": ""
+  "data": {
+    "script": "console.log('Hello, World!');",
+    "function": "",
+    "input": ""
+  }
 }
 
 ### Addition
-POST http://localhost:8082/run
+POST http://localhost:8082/kratos.runtime.nodejs/22-latest/script/run
 Content-Type: application/json
 
 {
-  "script": "export function add({a, b}) { return a + b; }",
-  "functionName": "add",
-  "input": {"a": 5, "b": 7},
-  "verbose": false
+  "data": {
+    "script": "export function add({a, b}) { return a + b; }",
+    "function": "add",
+    "input": {
+      "a": 5,
+      "b": 7
+    },
+    "verbose": false
+  }
 }
